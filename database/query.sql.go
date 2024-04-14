@@ -12,7 +12,7 @@ import (
 )
 
 const createArticle = `-- name: CreateArticle :one
-INSERT INTO articles (title, content, category_id, user_id) VALUES ($1, $2, $3, $4) RETURNING article_id
+INSERT INTO articles (title, content, category_id, user_id,updated_at) VALUES ($1, $2, $3, $4,now()) RETURNING article_id
 `
 
 type CreateArticleParams struct {
