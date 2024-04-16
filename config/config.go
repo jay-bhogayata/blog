@@ -6,7 +6,6 @@ import (
 	"strconv"
 
 	"github.com/jay-bhogayata/blogapi/logger"
-	"github.com/joho/godotenv"
 )
 
 type Config struct {
@@ -22,12 +21,6 @@ type Config struct {
 }
 
 func LoadConfig() (*Config, error) {
-
-	err := godotenv.Load()
-	if err != nil {
-		logger.Log.Error("error in loading .env file")
-		return nil, err
-	}
 
 	var cfg Config
 
