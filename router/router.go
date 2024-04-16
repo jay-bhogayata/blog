@@ -23,7 +23,7 @@ func NewRouter(cfg *config.Config, h *handlers.Handlers) *chi.Mux {
 
 		r.Get("/health", h.CheckHealth)
 
-		r.Route("/catagories", func(r chi.Router) {
+		r.Route("/tags", func(r chi.Router) {
 
 			r.With(jwtauth.Verifier(tokenAuth), jwtauth.Authenticator(tokenAuth)).Group(func(r chi.Router) {
 

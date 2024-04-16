@@ -47,14 +47,14 @@ UPDATE articles SET is_published = true, updated_at = now() WHERE article_id = $
 -- name: GetAllArticles :many
 SELECT a.article_id, a.title, a.content, a.user_id, c.name as tags_name, a.created_at, a.updated_at, a.is_published
 FROM articles a
-LEFT JOIN tags c ON a.tags_id = c.id
+LEFT JOIN tags c ON a.tag_id = c.id
 WHERE a.is_published = true;
 
 
 -- name: GetAllArticleByUser :many
 SELECT a.article_id, a.title, a.content, a.user_id, c.name as tags_name, a.created_at, a.updated_at, a.is_published
 FROM articles a
-LEFT JOIN tags c ON a.tags_id = c.id
+LEFT JOIN tags c ON a.tag_id = c.id
 WHERE a.user_id = $1;
 
 -- name: GetUserIdByArticleId :one
