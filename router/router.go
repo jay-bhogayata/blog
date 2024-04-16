@@ -27,14 +27,14 @@ func NewRouter(cfg *config.Config, h *handlers.Handlers) *chi.Mux {
 
 			r.With(jwtauth.Verifier(tokenAuth), jwtauth.Authenticator(tokenAuth)).Group(func(r chi.Router) {
 
-				r.Post("/", h.CreateCategory)
-				r.Put("/", h.UpdateCategory)
-				r.Delete("/{id}", h.DeleteCategory)
+				r.Post("/", h.CreateTag)
+				r.Put("/", h.UpdateTag)
+				r.Delete("/{id}", h.DeleteTag)
 
 			})
 
-			r.Get("/", h.GetAllCategories)
-			r.Get("/{id}", h.GetCategoryByID)
+			r.Get("/", h.GetAllTags)
+			r.Get("/{id}", h.GetTagByID)
 		})
 		r.Route("/accounts", func(r chi.Router) {
 			r.Post("/register", h.RegisterUser)

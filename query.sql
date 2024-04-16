@@ -1,17 +1,17 @@
--- name: CreateCategory :one
-INSERT INTO categories (name) VALUES ($1) RETURNING *;
+-- name: CreateTags :one
+INSERT INTO tags (name) VALUES ($1) RETURNING *;
 
--- name: GetCategoryById :one
-SELECT * FROM categories WHERE id = $1;
+-- name: GetTagsById :one
+SELECT * FROM tags WHERE id = $1;
 
--- name: GetAllCategories :many
-SELECT * FROM categories;
+-- name: GetAllTags :many
+SELECT * FROM tags;
 
--- name: UpdateCategory :one
-UPDATE categories SET name = $1 WHERE id = $2 RETURNING *;
+-- name: UpdateTags :one
+UPDATE tags SET name = $1 WHERE id = $2 RETURNING *;
 
--- name: DeleteCategory :exec
-DELETE FROM categories WHERE id = $1;
+-- name: DeleteTags :exec
+DELETE FROM tags WHERE id = $1;
 
 -- name: CreateUser :one
 INSERT INTO users (username, email, password_hash, is_verified, verification_token) VALUES ($1, $2, $3, $4, $5) RETURNING *;
@@ -39,22 +39,22 @@ UPDATE users SET is_verified = true, verification_token = null , updated_at = no
 
 
 -- name: CreateArticle :one
-INSERT INTO articles (title, content, category_id, user_id,updated_at,is_published) VALUES ($1, $2, $3, $4,now(),true) RETURNING article_id;
+INSERT INTO articles (title, content, tag_id, user_id,updated_at,is_published) VALUES ($1, $2, $3, $4,now(),true) RETURNING article_id;
 
 -- name: PublishArticle :exec
 UPDATE articles SET is_published = true, updated_at = now() WHERE article_id = $1;
 
 -- name: GetAllArticles :many
-SELECT a.article_id, a.title, a.content, a.user_id, c.name as category_name, a.created_at, a.updated_at, a.is_published
+SELECT a.article_id, a.title, a.content, a.user_id, c.name as tags_name, a.created_at, a.updated_at, a.is_published
 FROM articles a
-LEFT JOIN categories c ON a.category_id = c.id
+LEFT JOIN tags c ON a.tags_id = c.id
 WHERE a.is_published = true;
 
 
 -- name: GetAllArticleByUser :many
-SELECT a.article_id, a.title, a.content, a.user_id, c.name as category_name, a.created_at, a.updated_at, a.is_published
+SELECT a.article_id, a.title, a.content, a.user_id, c.name as tags_name, a.created_at, a.updated_at, a.is_published
 FROM articles a
-LEFT JOIN categories c ON a.category_id = c.id
+LEFT JOIN tags c ON a.tags_id = c.id
 WHERE a.user_id = $1;
 
 -- name: GetUserIdByArticleId :one
